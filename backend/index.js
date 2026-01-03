@@ -3,11 +3,17 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import authRoutes from "./routes/authRoutes.js";
+import { protect } from "./middlewares/authMiddleware.js";
+
+
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+app.use("/api/auth", authRoutes);
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
@@ -15,6 +21,10 @@ mongoose.connect(process.env.MONGO_URI)
 
 app.get("/", (req, res) => {
   res.send("Pizza API Running...");
+});
+
+app.get("/api/protected", protect, (req, res) => {
+  res.json({ msg: "Protected access granted", user: req.user });
 });
 
 app.listen(5000, () => console.log("Server started on port 5000"));

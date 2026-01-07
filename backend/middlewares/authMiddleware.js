@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
-export const protect = async (req, res, next) => {
+const protect = async (req, res, next) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
@@ -11,8 +11,9 @@ export const protect = async (req, res, next) => {
     req.user = await User.findById(decoded.id).select("-password");
 
     next();
-  } catch {
+  } catch (err) {
     res.status(401).json({ msg: "Invalid token" });
   }
-  console.log("Headers:", req.headers);
 };
+
+export default protect;

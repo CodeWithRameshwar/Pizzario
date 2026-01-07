@@ -6,6 +6,7 @@ import pizzaRoutes from "./routes/pizzaRoutes.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 import protect from "./middlewares/authMiddleware.js";
 
 
@@ -21,6 +22,9 @@ app.use("/api/pizzas", pizzaRoutes);
 app.use("/api/auth", authRoutes);
 
 app.use("/api/orders", orderRoutes);
+
+app.use("/api/payment", paymentRoutes);
+
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))

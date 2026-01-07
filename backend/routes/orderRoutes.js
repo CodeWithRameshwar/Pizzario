@@ -1,9 +1,9 @@
 import express from "express";
+import { placeOrder } from "../controllers/orderController.js";
+import protect from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
-  res.json({ msg: "Order route working" });
-});
+router.post("/", protect, placeOrder);
 
 export default router;
